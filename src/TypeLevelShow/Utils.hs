@@ -16,14 +16,14 @@ type family ShowParen b p where
 --
 -- Type-level relational operations are a pain. This may be easier to use.
 type ShowParenIfGt :: Natural -> Natural -> Symbol -> Symbol
-type ShowParenIfGt n d p = ShowParen (OrderingLT (CmpNat d n)) p
+type ShowParenIfGt n d p = ShowParen (OrderingGT (CmpNat d n)) p
 
-type family OrderingLT (a :: Ordering) :: Bool where
-    OrderingLT LT = True
-    OrderingLT EQ = False
-    OrderingLT GT = False
+type family OrderingGT (a :: Ordering) :: Bool where
+    OrderingGT LT = False
+    OrderingGT EQ = False
+    OrderingGT GT = True
 
 type ShowChar ch = ConsSymbol ch ""
 
 type l ++ r = AppendSymbol l r
-type l >  r = OrderingLT (CmpNat l r)
+type l >  r = OrderingGT (CmpNat l r)
