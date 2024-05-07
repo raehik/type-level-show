@@ -25,6 +25,10 @@ type family ShowNatBase' base showDigit acc n where
     ShowNatBase' base showDigit acc n = ShowNatBase' base showDigit
         (ConsSymbol (showDigit @@ (n `Mod` base)) acc) (n `Div` base)
 
+-- TODO add TypeErrors to invalid usages of these digit printers
+-- should be free performance-wise so no harm
+-- low priority because they're internals anyway
+
 type family ShowNatBinaryDigit (d :: Natural) :: Char where
     ShowNatBinaryDigit 0 = '0'
     ShowNatBinaryDigit 1 = '1'

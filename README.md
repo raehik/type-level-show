@@ -2,6 +2,8 @@
 Utilities for writing `Show`-like type families i.e. instead of `showsPrec
 :: Int -> a -> ShowS`, we have `ShowsPrec :: Natural -> k -> Symbol`.
 
+Requires at least GHC 9.2 for the type-level `Symbol` manipulation.
+
 ## Why?
 [refined-hackage]: https://hackage.haskell.org/package/refined
 [rerefined-hackage]: https://hackage.haskell.org/package/rerefined

@@ -1,5 +1,5 @@
 name: type-level-show
-version: 0.0.0
+version: 0.1.0
 synopsis: Utilities for writing Show-like type families
 description: Please see README.md.
 extra-source-files:
@@ -8,11 +8,11 @@ extra-source-files:
 category: Types, Data
 license: MIT
 license-file: LICENSE
-#tested-with:
-#- GHC==9.8
-#- GHC==9.6
-#- GHC==9.4
-# GHC 9.2 doesn't have GHC.TypeError, so cba for now
+tested-with:
+- GHC==9.8
+- GHC==9.6
+- GHC==9.4
+- GHC==9.2
 
 github: raehik/type-level-show
 maintainer: Ben Orchard <thefirstmuffinman@gmail.com>
@@ -60,7 +60,7 @@ ghc-options:
 - -Wno-unticked-promoted-constructors
 
 dependencies:
-- base # TODO
+- base >= 4.16 && < 5
 - defun-core ^>= 0.1
 
 library:

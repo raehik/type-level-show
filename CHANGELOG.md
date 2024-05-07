@@ -1,4 +1,4 @@
-## Unreleased
+## 0.1.0 (2024-05-07)
 Initial release.
 
-* some simple printy helpers
+* some simple type-level printy helpers
