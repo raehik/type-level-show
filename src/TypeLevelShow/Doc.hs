@@ -1,6 +1,23 @@
 {-# LANGUAGE AllowAmbiguousTypes #-} -- for reifying
 
-module TypeLevelShow.Doc where
+module TypeLevelShow.Doc
+  (
+  -- * Term level
+    Doc(..)
+  , renderDoc
+
+  -- * Type level
+  , PDoc
+  , RenderPDoc
+  , ErrorPDoc
+
+  -- * Singleton
+  , SDoc(..)
+  , SingDoc(singDoc)
+  , demoteDoc
+  , reifyDoc
+  , errorPDoc
+  ) where
 
 import GHC.TypeLits qualified as TE -- TE = TypeError
 import GHC.TypeLits hiding ( ErrorMessage(..) )
@@ -24,6 +41,15 @@ data Doc s
   -- ^ stack docs on top of each other (newline)
     deriving stock Show
 
+-- | Render a 'Doc' as a 'String', formatted how 'ErrorMessage's get displayed.
+renderDoc :: Doc String -> String
+renderDoc doc = "    • " <> go doc
+  where
+    go = \case
+      Text s   -> s
+      l :<>: r -> go l <>               go r
+      l :$$: r -> go l <> "\n      " <> go r
+
 -- | Promoted 'Doc'.
 type PDoc = Doc Symbol
 
@@ -35,6 +61,13 @@ type family RenderPDoc doc where
     RenderPDoc (Text s)   = TE.Text s
     RenderPDoc (l :<>: r) = RenderPDoc l TE.:<>: RenderPDoc r
     RenderPDoc (l :$$: r) = RenderPDoc l TE.:$$: RenderPDoc r
+
+-- | Render a 'PDoc' as an 'ErrorMessage', and wrap it in a 'TypeError'.
+--
+-- Note that this must be a type family, or the 'PDoc' won't actually get
+-- rendered.
+type ErrorPDoc :: PDoc -> a
+type family ErrorPDoc doc where ErrorPDoc doc = TypeError (RenderPDoc doc)
 
 -- | Singleton 'Doc'.
 data SDoc (doc :: PDoc) where
@@ -65,3 +98,11 @@ demoteDoc = \case
 -- | Reify a promoted 'Doc' to the corresponding term-level one.
 reifyDoc :: forall (doc :: PDoc). SingDoc doc => Doc String
 reifyDoc = demoteDoc (singDoc @doc)
+
+-- | Render a 'PDoc' as a 'String', and call 'error' on it.
+--
+-- This enables using the same code for type- and term- "runtime" errors.
+-- This can't be typechecked, naturally, but it's still nice.
+errorPDoc :: forall (doc :: PDoc) a. SingDoc doc => a
+-- add extra newline because runtime errors print like @*** Exception: _@
+errorPDoc = error $ ("\n" <>) $ renderDoc $ reifyDoc @doc

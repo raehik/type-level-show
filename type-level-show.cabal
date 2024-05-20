@@ -31,8 +31,12 @@ source-repository head
 
 library
   exposed-modules:
+      Raehik.Sing.Equality
+      Raehik.Sing.Natural
+      Raehik.Sing.Symbol
       TypeLevelShow.Doc
       TypeLevelShow.Natural
+      TypeLevelShow.Natural.Digit
       TypeLevelShow.Utils
   other-modules:
       Paths_type_level_show
