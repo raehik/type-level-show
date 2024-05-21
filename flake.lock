@@ -71,7 +71,24 @@
       "inputs": {
         "flake-parts": "flake-parts",
         "haskell-flake": "haskell-flake",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "singleraeh": "singleraeh"
+      }
+    },
+    "singleraeh": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1716255132,
+        "narHash": "sha256-jG8wCvEX+7bFPS7OUvQSG5u/CBlbjB47FeqHHTNjREY=",
+        "owner": "raehik",
+        "repo": "singleraeh",
+        "rev": "5c98671fada45f8d5d55ed3e1c4eea8f8d880d97",
+        "type": "github"
+      },
+      "original": {
+        "owner": "raehik",
+        "repo": "singleraeh",
+        "type": "github"
       }
     }
   },

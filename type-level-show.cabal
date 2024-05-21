@@ -31,9 +31,6 @@ source-repository head
 
 library
   exposed-modules:
-      Raehik.Sing.Equality
-      Raehik.Sing.Natural
-      Raehik.Sing.Symbol
       TypeLevelShow.Doc
       TypeLevelShow.Natural
       TypeLevelShow.Natural.Digit
@@ -57,4 +54,5 @@ library
   build-depends:
       base >=4.16 && <5
     , defun-core ==0.1.*
+    , singleraeh ==0.0.*
   default-language: GHC2021

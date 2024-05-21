@@ -62,6 +62,7 @@ ghc-options:
 dependencies:
 - base >= 4.16 && < 5
 - defun-core ^>= 0.1
+- singleraeh ^>= 0.0
 
 library:
   source-dirs: src

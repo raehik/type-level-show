@@ -11,9 +11,9 @@ probably due to different settings.
 module TypeLevelShow.Natural where
 
 import TypeLevelShow.Natural.Digit
-import Raehik.Sing.Natural
-import Raehik.Sing.Equality ( testEqElse )
-import Raehik.Sing.Symbol ( sConsSymbol )
+import Singleraeh.Natural
+import Singleraeh.Equality ( testEqElse )
+import Singleraeh.Symbol ( sConsSymbol )
 import GHC.TypeLits
 import DeFun.Core
 import Unsafe.Coerce ( unsafeCoerce )
@@ -48,18 +48,18 @@ type family ShowNatBase base showDigit n where
     ShowNatBase base showDigit 0 = "0"
     ShowNatBase base showDigit n = ShowNatBase' base showDigit "" n
 
-type ShowNatBase' :: Natural -> (Natural ~> Char) -> Symbol -> Natural -> Symbol
-type family ShowNatBase' base showDigit acc n where
-    ShowNatBase' base showDigit acc 0 = acc
-    ShowNatBase' base showDigit acc n = ShowNatBase' base showDigit
-        (ConsSymbol (showDigit @@ (n `Mod` base)) acc) (n `Div` base)
-
 sShowNatBase
     :: SNat base -> Lam SNat SChar showDigit -> SNat n
     -> SSymbol (ShowNatBase base showDigit n)
 sShowNatBase sbase sf sn =
       testEqElse sn (SNat @0) (SSymbol @"0")
     $ unsafeCoerce $ sShowNatBase' sbase sf (SSymbol @"") sn
+
+type ShowNatBase' :: Natural -> (Natural ~> Char) -> Symbol -> Natural -> Symbol
+type family ShowNatBase' base showDigit acc n where
+    ShowNatBase' base showDigit acc 0 = acc
+    ShowNatBase' base showDigit acc n = ShowNatBase' base showDigit
+        (ConsSymbol (showDigit @@ (n `Mod` base)) acc) (n `Div` base)
 
 sShowNatBase'
     :: SNat base -> Lam SNat SChar showDigit -> SSymbol acc -> SNat n

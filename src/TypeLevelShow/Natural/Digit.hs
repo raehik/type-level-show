@@ -14,7 +14,7 @@ module TypeLevelShow.Natural.Digit
 
 import GHC.TypeNats
 import DeFun.Core
-import Raehik.Sing.Equality ( testEqElse )
+import Singleraeh.Equality ( testEqElse )
 import TypeLevelShow.Doc
 import GHC.TypeLits hiding ( ErrorMessage(..) )
 

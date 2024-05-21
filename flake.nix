@@ -9,6 +9,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     haskell-flake.url = "github:srid/haskell-flake";
+    singleraeh.url   = "github:raehik/singleraeh";
+    singleraeh.flake = false;
   };
   outputs = inputs:
   let
@@ -31,18 +33,22 @@
         devShells.default = self'.devShells.ghc96;
         haskellProjects.ghc98 = {
           basePackages = pkgs.haskell.packages.ghc98;
+          packages.singleraeh.source = inputs.singleraeh;
           devShell = nondevDevShell "ghc98";
         };
         haskellProjects.ghc96 = {
           basePackages = pkgs.haskell.packages.ghc96;
+          packages.singleraeh.source = inputs.singleraeh;
           devShell.mkShellArgs.name = "ghc96-type-level-show";
         };
         haskellProjects.ghc94 = {
           basePackages = pkgs.haskell.packages.ghc94;
+          packages.singleraeh.source = inputs.singleraeh;
           devShell = nondevDevShell "ghc94";
         };
         haskellProjects.ghc92 = {
           basePackages = pkgs.haskell.packages.ghc92;
+          packages.singleraeh.source = inputs.singleraeh;
           devShell = nondevDevShell "ghc92";
         };
       };
