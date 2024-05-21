@@ -1,4 +1,4 @@
-## Unreleased
+## 0.2.0 (2024-05-21)
 * add singleton versions of various types, functions
 
 ## 0.1.1 (2024-05-16)
