@@ -21,6 +21,7 @@ module TypeLevelShow.Doc
 
 import GHC.TypeLits qualified as TE -- TE = TypeError
 import GHC.TypeLits hiding ( ErrorMessage(..) )
+import Singleraeh.Demote
 
 -- | Simple pretty document ADT.
 --
@@ -94,6 +95,10 @@ demoteDoc = \case
   SText s   -> Text $ fromSSymbol s
   l :$<>: r -> demoteDoc l :<>: demoteDoc r
   l :$$$: r -> demoteDoc l :$$: demoteDoc r
+
+instance Demotable SDoc where
+    type Demote SDoc = Doc String
+    demote = demoteDoc
 
 -- | Reify a promoted 'Doc' to the corresponding term-level one.
 reifyDoc :: forall (doc :: PDoc). SingDoc doc => Doc String
