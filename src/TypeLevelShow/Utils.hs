@@ -3,6 +3,7 @@
 module TypeLevelShow.Utils where
 
 import GHC.TypeLits
+import Singleraeh.Symbol ( sConsSymbol )
 
 -- | Surround the given 'Symbol' with parentheses when the 'Bool' parameter is
 --   'True'.
@@ -24,6 +25,8 @@ type family OrderingGT (a :: Ordering) :: Bool where
     OrderingGT GT = True
 
 type ShowChar ch = ConsSymbol ch ""
+sShowChar :: SChar ch -> SSymbol (ShowChar ch)
+sShowChar ch = sConsSymbol ch symbolSing
 
 type l ++ r = AppendSymbol l r
 type l >  r = OrderingGT (CmpNat l r)
