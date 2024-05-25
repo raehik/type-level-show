@@ -1,3 +1,7 @@
+## 0.2.1 (2024-05-25)
+* add `Demotable Doc` instance
+* single `ShowChar`
+
 ## 0.2.0 (2024-05-21)
 * add singleton versions of various types, functions
 

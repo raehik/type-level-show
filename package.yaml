@@ -1,5 +1,5 @@
 name: type-level-show
-version: 0.2.0
+version: 0.2.1
 synopsis: Utilities for writing Show-like type families
 description: Please see README.md.
 extra-source-files:
@@ -60,7 +60,7 @@ ghc-options:
 dependencies:
 - base >= 4.16 && < 5
 - defun-core ^>= 0.1
-- singleraeh ^>= 0.1
+- singleraeh ^>= 0.2
 
 library:
   source-dirs: src
