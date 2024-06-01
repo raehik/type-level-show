@@ -1,4 +1,4 @@
-## Unreleased
+## 0.3.0 (2024-06-01)
 * update singleraeh
 
 ## 0.2.1 (2024-05-25)
