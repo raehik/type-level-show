@@ -1,3 +1,6 @@
+## Unreleased
+* update singleraeh
+
 ## 0.2.1 (2024-05-25)
 * add `Demotable Doc` instance
 * single `ShowChar`

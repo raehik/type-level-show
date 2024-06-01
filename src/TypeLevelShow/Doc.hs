@@ -22,6 +22,7 @@ module TypeLevelShow.Doc
 import GHC.TypeLits qualified as TE -- TE = TypeError
 import GHC.TypeLits hiding ( ErrorMessage(..) )
 import Singleraeh.Demote
+import Singleraeh.SingI
 
 -- | Simple pretty document ADT.
 --
@@ -76,6 +77,17 @@ data SDoc (doc :: PDoc) where
     (:$<>:) :: SDoc docl -> SDoc docr -> SDoc (docl :<>: docr)
     (:$$$:) :: SDoc docl -> SDoc docr -> SDoc (docl :$$: docr)
 
+-- | Demote an 'SDoc' singleton to the corresponding base 'Doc'.
+demoteDoc :: SDoc doc -> Doc String
+demoteDoc = \case
+  SText s   -> Text $ fromSSymbol s
+  l :$<>: r -> demoteDoc l :<>: demoteDoc r
+  l :$$$: r -> demoteDoc l :$$: demoteDoc r
+
+instance Demotable SDoc where
+    type Demote SDoc = Doc String
+    demote = demoteDoc
+
 -- | Produce the singleton for the given promoted 'Doc'.
 class SingDoc (doc :: PDoc) where
     singDoc :: SDoc doc
@@ -89,16 +101,9 @@ instance (SingDoc l, SingDoc r) => SingDoc (l :<>: r) where
 instance (SingDoc l, SingDoc r) => SingDoc (l :$$: r) where
     singDoc = singDoc @l :$$$: singDoc @r
 
--- | Demote an 'SDoc' singleton to the corresponding base 'Doc'.
-demoteDoc :: SDoc doc -> Doc String
-demoteDoc = \case
-  SText s   -> Text $ fromSSymbol s
-  l :$<>: r -> demoteDoc l :<>: demoteDoc r
-  l :$$$: r -> demoteDoc l :$$: demoteDoc r
-
-instance Demotable SDoc where
-    type Demote SDoc = Doc String
-    demote = demoteDoc
+instance SingDoc doc => SingI doc where
+    type Sing = SDoc
+    sing' = singDoc
 
 -- | Reify a promoted 'Doc' to the corresponding term-level one.
 reifyDoc :: forall (doc :: PDoc). SingDoc doc => Doc String
