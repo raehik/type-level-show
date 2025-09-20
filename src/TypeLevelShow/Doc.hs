@@ -30,7 +30,7 @@ import Singleraeh.SingI
 -- level (as a boring ADT).
 --
 -- Note that 'TE.ShowType' is magical (see
--- @compiler/GHC/Core/Type.hs#L1309@), so we need to remove it for term level.
+-- @compiler\/GHC\/Core\/Type.hs#L1309@), so we need to remove it for term level.
 --
 -- singletons-base defines a version of this, but retains the 'TE.ShowType'
 -- constructor and is in the singletons ecosystem.
